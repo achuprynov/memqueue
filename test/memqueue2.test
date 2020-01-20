@@ -1,0 +1,36 @@
+#!/bin/bash
+
+for i in {1..10};
+do
+    for k in {1..1000};
+    do
+        var1="helloworld$k"
+        echo "$var1" > /dev/memqueue
+        if [ $? -eq 0 ]; then
+            echo "successed" > /dev/null
+        else
+            break
+        fi
+    done
+
+    echo $i $k
+
+    for (( n=1; n<=$k; n++ ))
+    do
+        var1="helloworld$n"
+        dd if=/dev/memqueue of=./test2 bs=65536 count=1 &> /dev/null
+        var2=$( cat ./test2 )
+        if [ "$var1" = "$var2" ]; then
+            echo "successed" > /dev/null
+        else
+            echo "failed"
+            exit 1
+        fi
+    done
+
+    echo $i $n
+
+    echo "done"
+done
+
+exit 0
