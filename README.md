@@ -12,9 +12,9 @@ InMemory queue (linux kernel module)
 User-mode демон необходимо запускать с указанием полного пути к файловому хранилищу, например: "./memqueue_daemon /var/tmp". Файлы будут создаваться с именами "memqueue_elem_<counter>". Остановка демона осуществляется командой "pkill memqueue_daemon". Логи сохраняются в syslog.
 
 Запись в очередь:
-cat <file> /dev/memqueue
-dd if=<file> of=/dev/memqueue bs=<size> count=1
+cat file /dev/memqueue
+dd if=file of=/dev/memqueue bs=size count=1
 
 Чтение из очереди:
-dd if=/dev/memqueue of=<file> bs=<size> count=1
+dd if=/dev/memqueue of=file bs=size count=1
 
